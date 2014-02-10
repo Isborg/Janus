@@ -39,5 +39,5 @@ public class Pawn extends Piece {
             moveList.get(3)[1] = -1;
         }
     }
-    
+    //
 }

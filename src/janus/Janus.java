@@ -14,7 +14,7 @@ public class Janus {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        pieces.Pawn p = new pieces.Pawn(true);
+        pieces.Pawn p = new pieces.Pawn(true);//
         p.isWhite();
     }
 }

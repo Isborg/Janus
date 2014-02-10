@@ -9,5 +9,5 @@ package janus;
  * @author Ismael
  */
 public class Board {
-    public static boolean[][] board = new boolean[8][8];
+    public static boolean[][] board = new boolean[8][8];//
 }

@@ -24,7 +24,7 @@ public abstract class Piece {
     }
     
     public void swapSelected() {
-        selected = !selected;
+        selected = !selected;//
     }
 
     public int[] getPosition() {
