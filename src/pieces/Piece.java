@@ -4,6 +4,7 @@
  */
 package pieces;
 
+import janus.Position;
 import java.util.ArrayList;
 
 /**
@@ -14,33 +15,33 @@ public abstract class Piece {
     
     protected boolean white;
     protected boolean selected;
-    protected ArrayList<int[]> positionRecord;
-    protected ArrayList<int[]> moveList;
+    protected ArrayList<Position> history = new ArrayList<Position>();
+    protected ArrayList<Position> validMoves = new ArrayList<Position>();
     
-    protected abstract void setMoveList();
+    protected abstract void refreshValidMoves();
+
+    public ArrayList<Position> getHistory() {
+        return history;
+    }
     
-    public ArrayList<int[]> getMoveList() {
-        return moveList;
+    public Position getPosition() {
+        return history.get(0);
     }
     
-    public void swapSelected() {
-        selected = !selected;//
+    public void setPosition(Position pos) {
+        history.add(0, pos);
     }
-
-    public int[] getPosition() {
-        return positionRecord.get(0);
-    }
-
-    public void setPosition(int[] pos) {
-        positionRecord.add(0, pos);
-    }
-
+    
     public boolean isWhite() {
         return white;
     }
 
     public boolean isSelected() {
         return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
     
 }

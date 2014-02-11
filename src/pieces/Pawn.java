@@ -4,7 +4,8 @@
  */
 package pieces;
 
-import janus.Board;
+import janus.Janus;
+import janus.Position;
 import java.util.ArrayList;
 
 /**
@@ -13,31 +14,59 @@ import java.util.ArrayList;
  */
 public class Pawn extends Piece {
     
+    private int[][] regularMoves;
+    
     public Pawn(boolean white) {
         this.white = white;
-        positionRecord = new ArrayList<int[]>();
-        setMoveList();
+        prepRegularMoves();
     }
 
-    @Override
-    protected void setMoveList() {
-        moveList = new ArrayList<int[]>();
-        for(int i = 0; i < 4; i++){
-            moveList.add(new int[2]);
-        }
-        moveList.get(2)[0] = -1;
-        moveList.get(3)[0] = 1;
-        if(isWhite()){
-            moveList.get(0)[1] = 1;
-            moveList.get(1)[1] = 2;
-            moveList.get(2)[1] = 1;
-            moveList.get(3)[1] = 1;
+    protected void prepRegularMoves() {
+        if(white){
+            int[][] moveArray = {
+                {0,1}, {0,2}, {-1,1}, {1,1}
+            };
+            regularMoves = moveArray;
         }else{
-            moveList.get(0)[1] = -1;
-            moveList.get(1)[1] = -2;
-            moveList.get(2)[1] = -1;
-            moveList.get(3)[1] = -1;
+            int[][] moveArray = {
+                {0,-1}, {0,-2}, {-1,-1}, {1,-1}
+            };
+            regularMoves = moveArray;
         }
     }
-    //
+    
+    // ARREGLAR, TERMINAR
+    @Override
+    protected void refreshValidMoves() {
+        validMoves.clear();
+        if(white){
+            for(int i = 0; i < regularMoves.length; i++){
+                int x = getPosition().getX();
+                int y = getPosition().getY();
+                int dX = regularMoves[i][0];
+                int dY = regularMoves[i][1];
+                if(dY == 2 && Janus.checkPosition(x, y + dY) == null
+                        && Janus.checkPosition(x, y + dY) == null){
+                    validMoves.add(Janus.fetchPosition(x, y + dY));
+                }else{
+                    switch(dX){
+                        case 0:
+                            if(Janus.checkPosition(x, y + dY) == null){
+                                validMoves.add(Janus.fetchPosition(x, y + dY));
+                            }
+                            break;
+                        case -1:
+                            if(!Janus.checkPosition(x + dX, y + dY).isWhite()){
+                                validMoves.add(Janus.fetchPosition(x + dX, y + dY));
+                            }
+                            //en passant
+                            break;
+                        case 1:
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    
 }
