@@ -10,9 +10,9 @@ import janus.Janus;
  *
  * @author Ismael
  */
-public class Bishop extends Piece {
+public class Rook extends Piece {
     
-    public Bishop(boolean white) {
+    public Rook(boolean white) {
         this.white = white;
     }
     
@@ -22,7 +22,7 @@ public class Bishop extends Piece {
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = -1;
-        int beta = -1;
+        int beta = 0;
         for(int i = 1; i <= 4; i++){
             for(int j = 1; j <= 7; j++){
                 Piece checkedPos = Janus.checkPosition(x + j * alpha, y + j * beta);
@@ -35,17 +35,15 @@ public class Bishop extends Piece {
                     break;
                 }
             }
-            beta *= -1;
-            if(beta == -1){
-                alpha = 1;
-            }
+            beta = alpha;
+            alpha = (alpha != 1) ? (alpha + 1) : (alpha - 1);
             /* +-------+------+
              * | alpha | beta |
              * +-------+------+
-             * |    -1 |   -1 |
-             * |    -1 |    1 |
-             * |     1 |   -1 |
-             * |     1 |    1 |
+             * |    -1 |    0 |
+             * |     0 |   -1 |
+             * |     1 |    0 |
+             * |     0 |    1 |
              * +-------+------+
              */
         }
