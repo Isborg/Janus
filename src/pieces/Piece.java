@@ -18,7 +18,17 @@ public abstract class Piece {
     protected ArrayList<Position> history = new ArrayList<Position>();
     protected ArrayList<Position> validMoves = new ArrayList<Position>();
     
-    protected abstract void refreshValidMoves();
+    public abstract void refreshValidMoves();
+    
+    protected boolean isOutOfBounds(int x, int y){
+        if(x < 0 || x > 7 || y < 0 || y > 7)
+            return true;
+        return false;
+    }
+
+    public ArrayList<Position> getValidMoves() {
+        return validMoves;
+    }
 
     public ArrayList<Position> getHistory() {
         return history;

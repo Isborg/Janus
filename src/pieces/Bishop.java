@@ -17,7 +17,7 @@ public class Bishop extends Piece {
     }
     
     @Override
-    protected void refreshValidMoves() {
+    public void refreshValidMoves() {
         validMoves.clear();
         int x = getPosition().getX();
         int y = getPosition().getY();
@@ -25,14 +25,16 @@ public class Bishop extends Piece {
         int beta = -1;
         for(int i = 1; i <= 4; i++){
             for(int j = 1; j <= 7; j++){
-                Piece checkedPos = Janus.checkPosition(x + j * alpha, y + j * beta);
-                if(checkedPos == null){
-                    validMoves.add(Janus.fetchPosition(x + j * alpha, y + j * beta));
-                }else{
-                    if(checkedPos.isWhite() != isWhite()){
+                if(!isOutOfBounds(x + j * alpha, y + j * beta)){
+                    Piece checkedPos = Janus.checkPosition(x + j * alpha, y + j * beta);
+                    if(checkedPos == null){
                         validMoves.add(Janus.fetchPosition(x + j * alpha, y + j * beta));
+                    }else{
+                        if(checkedPos.isWhite() != isWhite()){
+                            validMoves.add(Janus.fetchPosition(x + j * alpha, y + j * beta));
+                        }
+                        break;
                     }
-                    break;
                 }
             }
             beta *= -1;

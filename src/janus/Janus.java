@@ -4,8 +4,11 @@
  */
 package janus;
 
-import java.util.Map;
-import pieces.Piece;
+import java.io.Console;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Scanner;
+import pieces.*;
 
 /**
  *
@@ -14,7 +17,7 @@ import pieces.Piece;
 public class Janus {
 
     private static Janus INSTANCE = new Janus();
-    private static Map<Position,Piece> board;
+    private static HashMap<Position,Piece> board = new HashMap<Position, Piece>();
     private static Position[] positions = {
         new Position(0,0), new Position(1,0), new Position(2,0), new Position(3,0),
         new Position(4,0), new Position(5,0), new Position(6,0), new Position(7,0),
@@ -33,6 +36,10 @@ public class Janus {
         new Position(0,7), new Position(1,7), new Position(2,7), new Position(3,7),
         new Position(4,7), new Position(5,7), new Position(6,7), new Position(7,7)
     };
+
+    public static HashMap<Position, Piece> getBoard() {
+        return board;
+    }
     
     private Janus() {}
     
@@ -75,7 +82,10 @@ public class Janus {
         return positions[y * 8 + x];
     }
     
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws IOException {
+        Tester.setUpStartingBoard();
+        Tester.printBoard();
+        Tester.commandListener();
     }
+    
 }

@@ -37,7 +37,7 @@ public class Pawn extends Piece {
     
     // ARREGLAR, TERMINAR
     @Override
-    protected void refreshValidMoves() {
+    public void refreshValidMoves() {
         validMoves.clear();
         if(white){
             for(int i = 0; i < regularMoves.length; i++){

@@ -10,12 +10,13 @@ import janus.Janus;
  *
  * @author Ismael
  */
-public class Rook extends Piece {
+public class King extends Piece {
     
-    public Rook(boolean white) {
+    public King(boolean white) {
         this.white = white;
     }
     
+    // ARREGLAR, TERMINAR
     @Override
     public void refreshValidMoves() {
         validMoves.clear();
@@ -25,16 +26,14 @@ public class Rook extends Piece {
         int beta = 0;
         for(int i = 1; i <= 4; i++){
             for(int j = 1; j <= 7; j++){
-                if(!isOutOfBounds(x + j * alpha, y + j * beta)){
-                    Piece checkedPos = Janus.checkPosition(x + j * alpha, y + j * beta);
-                    if(checkedPos == null){
+                Piece checkedPos = Janus.checkPosition(x + j * alpha, y + j * beta);
+                if(checkedPos == null){
+                    validMoves.add(Janus.fetchPosition(x + j * alpha, y + j * beta));
+                }else{
+                    if(checkedPos.isWhite() != isWhite()){
                         validMoves.add(Janus.fetchPosition(x + j * alpha, y + j * beta));
-                    }else{
-                        if(checkedPos.isWhite() != isWhite()){
-                            validMoves.add(Janus.fetchPosition(x + j * alpha, y + j * beta));
-                        }
-                        break;
                     }
+                    break;
                 }
             }
             beta = alpha;
@@ -47,6 +46,19 @@ public class Rook extends Piece {
              * |     1 |    0 |
              * |     0 |    1 |
              * +-------+------+
+             *  x -= 1
+                x += 1
+                y -= 1
+                y += 1
+                x -= 1 && y -= 1
+                x -= 1 && y += 1
+                x += 1 && y -= 1
+                x += 1 && y += 1
+                x -= 2
+                if( posibilidad de enroque )
+                x -= 2
+                if( posibilidad de enroque )
+
              */
         }
     }
