@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public abstract class Piece {
     
     protected boolean white;
-    protected boolean selected;
     protected ArrayList<Position> history = new ArrayList<Position>();
     protected ArrayList<Position> validMoves = new ArrayList<Position>();
     
@@ -44,14 +43,6 @@ public abstract class Piece {
     
     public boolean isWhite() {
         return white;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
     
 }

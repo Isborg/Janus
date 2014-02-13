@@ -47,8 +47,7 @@ public class Tester {
          * board - Prints the current board
          * valid x y - Shows the valid moves for the piece in (x,y)
          * insert color piece x y - Inserts a piece in (x,y)
-         * ***select (activate valid moves)
-         * ***move
+         * move iX iY fX fY - Moves a piece from iPos to fPos
          */
         try{
             if(cmd.substring(0, 5).equals("board") && cmd.length() == 5){
@@ -56,6 +55,38 @@ public class Tester {
             }else if(cmd.substring(0, 5).equals("valid")){
                 try{
                     printValidMoves(Integer.parseInt(cmd.charAt(6)+""), Integer.parseInt(cmd.charAt(8)+""));
+                }catch(Exception e){
+                    printBoard();
+                    System.out.println("Invalid command");
+                }
+            }else if(cmd.substring(0, 4).equals("move")){
+                try{
+                    int iX = Integer.parseInt(cmd.charAt(5)+"");
+                    int iY = Integer.parseInt(cmd.charAt(7)+"");
+                    int fX = Integer.parseInt(cmd.charAt(9)+"");
+                    int fY = Integer.parseInt(cmd.charAt(11)+"");
+                    Piece piece = Janus.checkPosition(iX, iY);
+                    piece.refreshValidMoves();
+                    if(piece != null){
+                        boolean valid = false;
+                        for (Position pos : piece.getValidMoves()) {
+                            if(pos == Janus.fetchPosition(fX, fY)){
+                                valid = true;
+                                Janus.getBoard().put(Janus.fetchPosition(iX, iY), null);
+                                Janus.getBoard().put(pos, piece);
+                                piece.setPosition(pos);
+                                printBoard();
+                                break;
+                            }
+                        }
+                        if(!valid){
+                            printBoard();
+                            System.out.println("Invalid command");
+                        }
+                    }else{
+                        printBoard();
+                        System.out.println("Invalid command");
+                    }
                 }catch(Exception e){
                     printBoard();
                     System.out.println("Invalid command");

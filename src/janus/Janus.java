@@ -17,6 +17,7 @@ import pieces.*;
 public class Janus {
 
     private static Janus INSTANCE = new Janus();
+    private static Piece selectedPiece;
     private static HashMap<Position,Piece> board = new HashMap<Position, Piece>();
     private static Position[] positions = {
         new Position(0,0), new Position(1,0), new Position(2,0), new Position(3,0),
@@ -36,6 +37,14 @@ public class Janus {
         new Position(0,7), new Position(1,7), new Position(2,7), new Position(3,7),
         new Position(4,7), new Position(5,7), new Position(6,7), new Position(7,7)
     };
+
+    public static Piece getSelectedPiece() {
+        return selectedPiece;
+    }
+
+    public static void setSelectedPiece(Piece selectedPiece) {
+        Janus.selectedPiece = selectedPiece;
+    }
 
     public static HashMap<Position, Piece> getBoard() {
         return board;
