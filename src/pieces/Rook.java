@@ -35,6 +35,8 @@ public class Rook extends Piece {
                         }
                         break;
                     }
+                }else{
+                    break;
                 }
             }
             beta = alpha;

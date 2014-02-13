@@ -35,6 +35,8 @@ public class Queen extends Piece {
                         }
                         break;
                     }
+                }else{
+                    break;
                 }
             }
             beta *= -1;
@@ -65,6 +67,8 @@ public class Queen extends Piece {
                         }
                         break;
                     }
+                }else{
+                    break;
                 }
             }
             beta = alpha;

@@ -35,6 +35,8 @@ public class Bishop extends Piece {
                         }
                         break;
                     }
+                }else{
+                    break;
                 }
             }
             beta *= -1;

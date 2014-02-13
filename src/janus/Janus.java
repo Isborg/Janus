@@ -82,7 +82,7 @@ public class Janus {
         return positions[y * 8 + x];
     }
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Tester.setUpStartingBoard();
         Tester.printBoard();
         Tester.commandListener();
