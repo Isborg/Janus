@@ -46,8 +46,8 @@ public class Tester {
          * Commands:
          * board - Prints the current board
          * valid x y - Shows the valid moves for the piece in (x,y)
-         * insert color piece x y - Inserts a piece in (x,y)
          * move iX iY fX fY - Moves a piece from iPos to fPos
+         * insert color piece x y - Inserts a piece in (x,y)
          */
         try{
             if(cmd.substring(0, 5).equals("board") && cmd.length() == 5){
