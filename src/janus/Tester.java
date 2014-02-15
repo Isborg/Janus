@@ -37,6 +37,34 @@ public class Tester {
         }
     }
     
+    private static int translateCoordinates(char c){
+        try{
+            int n = Integer.parseInt(c + "");
+            switch(n){
+                case 1: return 0;
+                case 2: return 1;
+                case 3: return 2;
+                case 4: return 3;
+                case 5: return 4;
+                case 6: return 5;
+                case 7: return 6;
+                case 8: return 7;
+            }
+        }catch(NumberFormatException e){
+            switch(c){
+                case 'a': return 0;
+                case 'b': return 1;
+                case 'c': return 2;
+                case 'd': return 3;
+                case 'e': return 4;
+                case 'f': return 5;
+                case 'g': return 6;
+                case 'h': return 7;
+            }
+        }
+        return -1;
+    }
+    
     public static void commandListener() throws IOException, InterruptedException {
         Scanner reader = new Scanner(System.in);
         String cmd = reader.nextLine();
@@ -45,26 +73,26 @@ public class Tester {
         /*
          * Commands:
          * board - Prints the current board
-         * valid x y - Shows the valid moves for the piece in (x,y)
-         * move iX iY fX fY - Moves a piece from iPos to fPos
-         * insert color piece x y - Inserts a piece in (x,y)
+         * valid xy - Shows the valid moves for the piece in (x,y)
+         * move iXiY fXfY - Moves a piece from iPos to fPos
+         * insert color piece xy - Inserts a piece in (x,y)
          */
         try{
             if(cmd.substring(0, 5).equals("board") && cmd.length() == 5){
                 printBoard();
             }else if(cmd.substring(0, 5).equals("valid")){
                 try{
-                    printValidMoves(Integer.parseInt(cmd.charAt(6)+""), Integer.parseInt(cmd.charAt(8)+""));
+                    printValidMoves(translateCoordinates(cmd.charAt(6)),translateCoordinates(cmd.charAt(7)));
                 }catch(Exception e){
                     printBoard();
                     System.out.println("Invalid command");
                 }
             }else if(cmd.substring(0, 4).equals("move")){
                 try{
-                    int iX = Integer.parseInt(cmd.charAt(5)+"");
-                    int iY = Integer.parseInt(cmd.charAt(7)+"");
-                    int fX = Integer.parseInt(cmd.charAt(9)+"");
-                    int fY = Integer.parseInt(cmd.charAt(11)+"");
+                    int iX = translateCoordinates(cmd.charAt(5));
+                    int iY = translateCoordinates(cmd.charAt(6));
+                    int fX = translateCoordinates(cmd.charAt(8));
+                    int fY = translateCoordinates(cmd.charAt(9));
                     Piece piece = Janus.checkPosition(iX, iY);
                     piece.refreshValidMoves();
                     if(piece != null){
@@ -103,27 +131,27 @@ public class Tester {
                     if(cmd.substring(13, 17).equals("pawn")){
                         piece = new Pawn(white);
                         piece.setPosition(Janus.fetchPosition(
-                                Integer.parseInt(cmd.charAt(18)+""), Integer.parseInt(cmd.charAt(20)+"")));
+                                translateCoordinates(cmd.charAt(18)), translateCoordinates(cmd.charAt(19))));
                     }else if(cmd.substring(13, 19).equals("knight")){
                         piece = new Knight(white);
                         piece.setPosition(Janus.fetchPosition(
-                                Integer.parseInt(cmd.charAt(20)+""), Integer.parseInt(cmd.charAt(22)+"")));
+                                translateCoordinates(cmd.charAt(20)), translateCoordinates(cmd.charAt(21))));
                     }else if(cmd.substring(13, 19).equals("bishop")){
                         piece = new Bishop(white);
                         piece.setPosition(Janus.fetchPosition(
-                                Integer.parseInt(cmd.charAt(20)+""), Integer.parseInt(cmd.charAt(22)+"")));
+                                translateCoordinates(cmd.charAt(20)), translateCoordinates(cmd.charAt(21))));
                     }else if(cmd.substring(13, 17).equals("rook")){
                         piece = new Rook(white);
                         piece.setPosition(Janus.fetchPosition(
-                                Integer.parseInt(cmd.charAt(18)+""), Integer.parseInt(cmd.charAt(20)+"")));
+                                translateCoordinates(cmd.charAt(18)), translateCoordinates(cmd.charAt(19))));
                     }else if(cmd.substring(13, 17).equals("king")){
                         piece = new King(white);
                         piece.setPosition(Janus.fetchPosition(
-                                Integer.parseInt(cmd.charAt(18)+""), Integer.parseInt(cmd.charAt(20)+"")));
+                                translateCoordinates(cmd.charAt(18)), translateCoordinates(cmd.charAt(19))));
                     }else if(cmd.substring(13, 18).equals("queen")){
                         piece = new Queen(white);
                         piece.setPosition(Janus.fetchPosition(
-                                Integer.parseInt(cmd.charAt(19)+""), Integer.parseInt(cmd.charAt(21)+"")));
+                                translateCoordinates(cmd.charAt(19)), translateCoordinates(cmd.charAt(20))));
                     }
                     Janus.getBoard().put(piece.getPosition(), piece);
                     printBoard();
