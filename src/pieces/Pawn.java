@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     // Para comer en passant hay que revisar que el doble avance enemigo fuera LA ÚLTIMA jugada hecha en la partida
     @Override
     public void refreshValidMoves() {
-        validMoves.clear();
+        clearValids();
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = (white) ? 1 : -1;
@@ -46,7 +46,7 @@ public class Pawn extends Piece {
 
     @Override
     public void refreshThreats() {
-        threats.clear();
+        clearThreats();
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = (white) ? 1 : -1;

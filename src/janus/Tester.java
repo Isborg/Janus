@@ -96,18 +96,10 @@ public class Tester {
                     Piece piece = Janus.fetchPiece(iX, iY);
                     piece.refreshValidMoves();
                     if(piece != null){
-                        boolean valid = false;
-                        for (Position pos : piece.getValidMoves()) {
-                            if(pos == Janus.fetchPosition(fX, fY)){
-                                valid = true;
-                                Janus.getBoard().put(Janus.fetchPosition(iX, iY), null);
-                                Janus.getBoard().put(pos, piece);
-                                piece.setPosition(pos);
-                                printBoard();
-                                break;
-                            }
-                        }
-                        if(!valid){
+                        if(piece.getValidMoves().contains(Janus.fetchPosition(fX, fY))){
+                            piece.move(fX, fY);
+                            printBoard();
+                        }else{
                             printBoard();
                             System.out.println("Invalid command");
                         }
@@ -204,17 +196,17 @@ public class Tester {
             Piece p = Janus.fetchPiece(j, i);
             if(p == null){
                 row += blank;
-            }else if(p.getClass().equals(Pawn.class)){
+            }else if(p instanceof Pawn){
                 row += (p.isWhite()) ? wPawn : bPawn;
-            }else if(p.getClass().equals(Knight.class)){
+            }else if(p instanceof Knight){
                 row += (p.isWhite()) ? wKnight : bKnight;
-            }else if(p.getClass().equals(Bishop.class)){
+            }else if(p instanceof Bishop){
                 row += (p.isWhite()) ? wBishop : bBishop;
-            }else if(p.getClass().equals(Rook.class)){
+            }else if(p instanceof Rook){
                 row += (p.isWhite()) ? wRook : bRook;
-            }else if(p.getClass().equals(Queen.class)){
+            }else if(p instanceof Queen){
                 row += (p.isWhite()) ? wQueen : bQueen;
-            }else if(p.getClass().equals(King.class)){
+            }else if(p instanceof King){
                 row += (p.isWhite()) ? wKing : bKing;
             }
         }
@@ -268,17 +260,17 @@ public class Tester {
                 row += valid;
             }else if(p == null){
                 row += blank;
-            }else if(p.getClass().equals(Pawn.class)){
+            }else if(p instanceof Pawn){
                 row += (p.isWhite()) ? wPawn : bPawn;
-            }else if(p.getClass().equals(Knight.class)){
+            }else if(p instanceof Knight){
                 row += (p.isWhite()) ? wKnight : bKnight;
-            }else if(p.getClass().equals(Bishop.class)){
+            }else if(p instanceof Bishop){
                 row += (p.isWhite()) ? wBishop : bBishop;
-            }else if(p.getClass().equals(Rook.class)){
+            }else if(p instanceof Rook){
                 row += (p.isWhite()) ? wRook : bRook;
-            }else if(p.getClass().equals(Queen.class)){
+            }else if(p instanceof Queen){
                 row += (p.isWhite()) ? wQueen : bQueen;
-            }else if(p.getClass().equals(King.class)){
+            }else if(p instanceof King){
                 row += (p.isWhite()) ? wKing : bKing;
             }
         }

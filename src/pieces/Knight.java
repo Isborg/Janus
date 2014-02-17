@@ -22,7 +22,7 @@ public class Knight extends Piece {
     
     @Override
     public void refreshValidMoves() {
-        validMoves.clear();
+        clearValids();
         int x = getPosition().getX();
         int y = getPosition().getY();
         for(int i = 0; i < regularMoves.length; i++){
@@ -39,7 +39,7 @@ public class Knight extends Piece {
 
     @Override
     public void refreshThreats() {
-        threats.clear();
+        clearThreats();
         int x = getPosition().getX();
         int y = getPosition().getY();
         for(int i = 0; i < regularMoves.length; i++){

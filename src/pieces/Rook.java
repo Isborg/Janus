@@ -18,7 +18,7 @@ public class Rook extends Piece {
     
     @Override
     public void refreshValidMoves() {
-        validMoves.clear();
+        clearValids();
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = -1;
@@ -55,7 +55,7 @@ public class Rook extends Piece {
 
     @Override
     public void refreshThreats() {
-        threats.clear();
+        clearThreats();
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = -1;

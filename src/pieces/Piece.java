@@ -25,7 +25,8 @@ public abstract class Piece {
     public void move(int x, int y){
         Position pos = Janus.fetchPosition(x, y);
         if(validMoves.contains(pos)){
-            history.add(pos);
+            Janus.getBoard().put(getPosition(), null);
+            setPosition(pos);
             Janus.getBoard().put(pos, this);
             refreshValidMoves();
             refreshThreats();
@@ -48,6 +49,27 @@ public abstract class Piece {
     protected void addThreat(Position position){
         threats.add(position);
         position.getThreats().add(this);
+        Piece piece = Janus.fetchPiece(position.getX(), position.getY());
+        if(piece != null && piece instanceof King){
+            if(piece.isWhite())
+                Janus.setWhiteCheck(true);
+            else
+                Janus.setBlackCheck(true);
+        }
+    }
+    
+    protected void clearValids(){
+        for (Position position : getValidMoves()) {
+            position.getValids().remove(this);
+        }
+        validMoves.clear();
+    }
+    
+    protected void clearThreats(){
+        for (Position position : getThreats()) {
+            position.getThreats().remove(this);
+        }
+        threats.clear();
     }
     
     protected boolean isOutOfBounds(int x, int y){

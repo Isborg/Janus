@@ -16,10 +16,9 @@ public class King extends Piece {
         this.white = white;
     }
     
-    // ARREGLAR, TERMINAR, ENROQUES
     @Override
     public void refreshValidMoves() {
-        validMoves.clear();
+        clearValids();
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = -1;
@@ -32,12 +31,18 @@ public class King extends Piece {
         }
         if(history.size() == 1 && Janus.fetchPiece(0, y).getHistory().size() == 1 &&
                 Janus.fetchPiece(1, y) == null && Janus.fetchPiece(2, y) == null &&
-                Janus.fetchPiece(3, y) == null /*1,y 2,y 3,y no amenazados, no en jaque*/){
+                Janus.fetchPiece(3, y) == null &&
+                Janus.fetchPosition(1, y).getThreats().isEmpty() &&
+                Janus.fetchPosition(2, y).getThreats().isEmpty() &&
+                Janus.fetchPosition(3, y).getThreats().isEmpty() &&
+                Janus.fetchPosition(4, y).getThreats().isEmpty()){
             addValidMove(Janus.fetchPosition(2, y));
         }
         if(history.size() == 1 && Janus.fetchPiece(7, y).getHistory().size() == 1 &&
-                Janus.fetchPiece(6, y) == null && Janus.fetchPiece(5, y) == null
-                /*6,y 5,y no amenazados, no en jaque*/){
+                Janus.fetchPiece(6, y) == null && Janus.fetchPiece(5, y) == null &&
+                Janus.fetchPosition(6, y).getThreats().isEmpty() &&
+                Janus.fetchPosition(5, y).getThreats().isEmpty() &&
+                Janus.fetchPosition(4, y).getThreats().isEmpty()){
             addValidMove(Janus.fetchPosition(6, y));
         }
     }
@@ -52,7 +57,7 @@ public class King extends Piece {
 
     @Override
     public void refreshThreats() {
-        threats.clear();
+        clearThreats();
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = -1;
