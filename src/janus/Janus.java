@@ -17,7 +17,7 @@ import pieces.*;
  */
 public class Janus {
     
-    private static Piece selectedPiece;
+    private static Piece selectedPiece = null;
     private static boolean whiteCheck = false;
     private static boolean blackCheck = false;
     private static HashMap<Position,Piece> board = new HashMap<Position, Piece>();
@@ -104,9 +104,11 @@ public class Janus {
     }
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        Tester.setUpStartingBoard();
+        GraphicTester tester = new GraphicTester();
+        tester.setVisible(true);
+        /*Tester.setUpStartingBoard();
         Tester.printBoard();
-        Tester.commandListener();
+        Tester.commandListener();*/
     }
     
 }
