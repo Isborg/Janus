@@ -4,6 +4,9 @@
  */
 package janus;
 
+import java.util.ArrayList;
+import pieces.Piece;
+
 /**
  *
  * @author Ismael
@@ -12,6 +15,8 @@ public class Position {
     
     private int x;
     private int y;
+    private ArrayList<Piece> valids = new ArrayList<Piece>();
+    private ArrayList<Piece> threats = new ArrayList<Piece>();
 
     public Position(int x, int y) {
         this.x = x;
@@ -22,16 +27,16 @@ public class Position {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public ArrayList<Piece> getValids() {
+        return valids;
+    }
+
+    public ArrayList<Piece> getThreats() {
+        return threats;
     }
     
 }

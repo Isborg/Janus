@@ -4,7 +4,7 @@
  */
 package janus;
 
-import static janus.Janus.checkPosition;
+import static janus.Janus.fetchPiece;
 import static janus.Janus.fetchPosition;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -93,7 +93,7 @@ public class Tester {
                     int iY = translateCoordinates(cmd.charAt(6));
                     int fX = translateCoordinates(cmd.charAt(8));
                     int fY = translateCoordinates(cmd.charAt(9));
-                    Piece piece = Janus.checkPosition(iX, iY);
+                    Piece piece = Janus.fetchPiece(iX, iY);
                     piece.refreshValidMoves();
                     if(piece != null){
                         boolean valid = false;
@@ -201,7 +201,7 @@ public class Tester {
         String bKing = " bKing |";
         String row = "| " + (i + 1) + " |";
         for(int j = 0; j <= 7; j++){
-            Piece p = Janus.checkPosition(j, i);
+            Piece p = Janus.fetchPiece(j, i);
             if(p == null){
                 row += blank;
             }else if(p.getClass().equals(Pawn.class)){
@@ -222,7 +222,7 @@ public class Tester {
     }
     
     public static void printValidMoves(int x, int y){
-        Piece piece = Janus.checkPosition(x, y);
+        Piece piece = Janus.fetchPiece(x, y);
         piece.refreshValidMoves();
         if(piece != null){
             System.out.println("+---+-------+-------+-------+-------+-------+-------+-------+-------+");
@@ -263,7 +263,7 @@ public class Tester {
                 if(position.getX() == j && position.getY() == i)
                     isValid = true;
             }
-            Piece p = Janus.checkPosition(j, i);
+            Piece p = Janus.fetchPiece(j, i);
             if(isValid){
                 row += valid;
             }else if(p == null){

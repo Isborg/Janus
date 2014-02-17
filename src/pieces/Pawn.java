@@ -25,23 +25,33 @@ public class Pawn extends Piece {
         int x = getPosition().getX();
         int y = getPosition().getY();
         int alpha = (white) ? 1 : -1;
-        if(Janus.checkPosition(x, y + alpha) == null){
-            validMoves.add(Janus.fetchPosition(x, y + alpha));
-            if(history.size() == 1 && Janus.checkPosition(x, y + 2 * alpha) == null){
-                validMoves.add(Janus.fetchPosition(x, y + 2 * alpha));
+        if(Janus.fetchPiece(x, y + alpha) == null){
+            addValidMove(Janus.fetchPosition(x, y + alpha));
+            if(history.size() == 1 && Janus.fetchPiece(x, y + 2 * alpha) == null){
+                addValidMove(Janus.fetchPosition(x, y + 2 * alpha));
             }
         }
         for(int i = -1; i <= 1; i += 2){
-            Piece sidePiece = Janus.checkPosition(x + i, y);
-            Piece diagonalPiece = Janus.checkPosition(x + i, y + alpha);
+            Piece sidePiece = Janus.fetchPiece(x + i, y);
+            Piece diagonalPiece = Janus.fetchPiece(x + i, y + alpha);
             if(!isOutOfBounds(x + i, y + alpha) && 
                     ((diagonalPiece != null && diagonalPiece.isWhite() != white) ||
                     (sidePiece != null && sidePiece.getClass() == Pawn.class &&
                     ((isWhite() && y == 4) || (!isWhite() && y == 3)) &&
                     sidePiece.getHistory().size() == 2))){
-                validMoves.add(Janus.fetchPosition(x + i, y + alpha));
+                addValidMove(Janus.fetchPosition(x + i, y + alpha));
             }
         }
+    }
+
+    @Override
+    public void refreshThreats() {
+        threats.clear();
+        int x = getPosition().getX();
+        int y = getPosition().getY();
+        int alpha = (white) ? 1 : -1;
+        addThreat(Janus.fetchPosition(x - 1, y + alpha));
+        addThreat(Janus.fetchPosition(x + 1, y + alpha));
     }
     
 }

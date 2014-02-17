@@ -6,6 +6,7 @@ package janus;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import pieces.*;
@@ -18,6 +19,8 @@ public class Janus {
 
     private static Janus INSTANCE = new Janus();
     private static Piece selectedPiece;
+    private static boolean whiteCheck = false;
+    private static boolean blackCheck = false;
     private static HashMap<Position,Piece> board = new HashMap<Position, Piece>();
     private static Position[] positions = {
         new Position(0,0), new Position(1,0), new Position(2,0), new Position(3,0),
@@ -38,6 +41,22 @@ public class Janus {
         new Position(4,7), new Position(5,7), new Position(6,7), new Position(7,7)
     };
 
+    public static boolean isWhiteCheck() {
+        return whiteCheck;
+    }
+
+    public static void setWhiteCheck(boolean whiteCheck) {
+        Janus.whiteCheck = whiteCheck;
+    }
+
+    public static boolean isBlackCheck() {
+        return blackCheck;
+    }
+
+    public static void setBlackCheck(boolean blackCheck) {
+        Janus.blackCheck = blackCheck;
+    }
+
     public static Piece getSelectedPiece() {
         return selectedPiece;
     }
@@ -48,12 +67,6 @@ public class Janus {
 
     public static HashMap<Position, Piece> getBoard() {
         return board;
-    }
-    
-    private Janus() {}
-    
-    public static Janus getInstance() {
-        return INSTANCE;
     }
     
     /* +---+-----+-----+-----+-----+-----+-----+-----+-----+
@@ -83,7 +96,7 @@ public class Janus {
      * +---+----+----+----+----+----+----+----+----+
      */
     
-    public static Piece checkPosition(int x, int y) {
+    public static Piece fetchPiece(int x, int y) {
         return board.get(fetchPosition(x, y));
     }
     

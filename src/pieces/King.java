@@ -30,24 +30,44 @@ public class King extends Piece {
             checkValidMove(x + alpha, y + 1);
             alpha = 1;
         }
-        if(history.size() == 1 && Janus.checkPosition(0, y).getHistory().size() == 1 &&
-                Janus.checkPosition(1, y) == null && Janus.checkPosition(2, y) == null &&
-                Janus.checkPosition(3, y) == null /*1,y 2,y 3,y no amenazados, no en jaque*/){
-            validMoves.add(Janus.fetchPosition(2, y));
+        if(history.size() == 1 && Janus.fetchPiece(0, y).getHistory().size() == 1 &&
+                Janus.fetchPiece(1, y) == null && Janus.fetchPiece(2, y) == null &&
+                Janus.fetchPiece(3, y) == null /*1,y 2,y 3,y no amenazados, no en jaque*/){
+            addValidMove(Janus.fetchPosition(2, y));
         }
-        if(history.size() == 1 && Janus.checkPosition(7, y).getHistory().size() == 1 &&
-                Janus.checkPosition(6, y) == null && Janus.checkPosition(5, y) == null
+        if(history.size() == 1 && Janus.fetchPiece(7, y).getHistory().size() == 1 &&
+                Janus.fetchPiece(6, y) == null && Janus.fetchPiece(5, y) == null
                 /*6,y 5,y no amenazados, no en jaque*/){
-            validMoves.add(Janus.fetchPosition(6, y));
+            addValidMove(Janus.fetchPosition(6, y));
         }
     }
     
     private void checkValidMove(int x, int y){
-        Piece checkedPos = Janus.checkPosition(x, y);
+        Piece checkedPos = Janus.fetchPiece(x, y);
         if(!isOutOfBounds(x, y) &&
-                (checkedPos == null || checkedPos.isWhite() != isWhite())){
-            validMoves.add(Janus.fetchPosition(x, y));
+                (checkedPos == null || checkedPos.isWhite() != white)){
+            addValidMove(Janus.fetchPosition(x, y));
         }
+    }
+
+    @Override
+    public void refreshThreats() {
+        threats.clear();
+        int x = getPosition().getX();
+        int y = getPosition().getY();
+        int alpha = -1;
+        for(int i = 1; i <= 2; i++){
+            checkThreat(x + alpha, y);
+            checkThreat(x, y + alpha);
+            checkThreat(x + alpha, y - 1);
+            checkThreat(x + alpha, y + 1);
+            alpha = 1;
+        }
+    }
+    
+    private void checkThreat(int x, int y){
+        if(!isOutOfBounds(x, y))
+            addThreat(Janus.fetchPosition(x, y));
     }
     
 }

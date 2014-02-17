@@ -4,6 +4,7 @@
  */
 package pieces;
 
+import janus.Janus;
 import janus.Position;
 import java.util.ArrayList;
 
@@ -16,13 +17,47 @@ public abstract class Piece {
     protected boolean white;
     protected ArrayList<Position> history = new ArrayList<Position>();
     protected ArrayList<Position> validMoves = new ArrayList<Position>();
+    protected ArrayList<Position> threats = new ArrayList<Position>();
     
     public abstract void refreshValidMoves();
+    public abstract void refreshThreats();
+    
+    public void move(int x, int y){
+        Position pos = Janus.fetchPosition(x, y);
+        if(validMoves.contains(pos)){
+            history.add(pos);
+            Janus.getBoard().put(pos, this);
+            refreshValidMoves();
+            refreshThreats();
+            for (Piece piece : pos.getValids()) {
+                piece.refreshValidMoves();
+                piece.refreshThreats();
+            }
+            for (Piece piece : pos.getThreats()) {
+                piece.refreshValidMoves();
+                piece.refreshThreats();
+            }
+        }
+    }
+    
+    protected void addValidMove(Position position){
+        validMoves.add(position);
+        position.getValids().add(this);
+    }
+    
+    protected void addThreat(Position position){
+        threats.add(position);
+        position.getThreats().add(this);
+    }
     
     protected boolean isOutOfBounds(int x, int y){
         if(x < 0 || x > 7 || y < 0 || y > 7)
             return true;
         return false;
+    }
+    
+    public ArrayList<Position> getThreats() {
+        return threats;
     }
 
     public ArrayList<Position> getValidMoves() {
