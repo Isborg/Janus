@@ -6,8 +6,11 @@ package janus;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import pieces.Bishop;
 import pieces.King;
@@ -23,6 +26,8 @@ import pieces.Rook;
  */
 public class GraphicTester extends javax.swing.JFrame {
     
+    private enum mode {MOVE,VALID};
+    private mode activeMode = mode.MOVE;
     private SquareButton[] squares = {
         new SquareButton(0, 0, this), new SquareButton(1, 0, this), new SquareButton(2, 0, this), new SquareButton(3, 0, this),
         new SquareButton(4, 0, this), new SquareButton(5, 0, this), new SquareButton(6, 0, this), new SquareButton(7, 0, this),
@@ -54,19 +59,42 @@ public class GraphicTester extends javax.swing.JFrame {
             addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try{
-                        Piece p = Janus.fetchPiece(getX(), getY());
-                        if(Janus.getSelectedPiece() != null){
-                            Janus.getSelectedPiece().move(getX(), getY());
-                            Janus.setSelectedPiece(null);
-                            updateBoard();
-                        }else{
-                            Janus.setSelectedPiece(p);
-                            p.refreshValidMoves();
-                            showValidMoves(p);
-                        }
-                    }catch(Exception ex){
-                        System.out.println(ex.toString());
+                    switch(activeMode){
+                        case MOVE:
+                            try{
+                                Piece p = Janus.fetchPiece(getX(), getY());
+                                if(Janus.getSelectedPiece() != null){
+                                    Janus.getSelectedPiece().move(getX(), getY());
+                                    Janus.setSelectedPiece(null);
+                                    updateBoard();
+                                }else{
+                                    Janus.setSelectedPiece(p);
+                                    showValidMoves(p);
+                                }
+                            }catch(Exception ex){
+                                System.out.println(ex.toString());
+                            }
+                            break;
+                        case VALID:
+                            try{
+                                updateBoard();
+                                Position pos = Janus.fetchPosition(getX(), getY());
+                                fetchSquare(pos.getX(), pos.getY()).setBackground(Color.WHITE);
+                                for (Piece p : pos.getValids()) {
+                                    fetchSquare(p.getPosition().getX(), p.getPosition().getY()).setBackground(Color.CYAN);
+                                }
+                                for (Piece p : pos.getThreats()) {
+                                    if(pos.getValids().contains(p))
+                                        fetchSquare(p.getPosition().getX(), p.getPosition().getY()).setBackground(Color.ORANGE);
+                                    else
+                                        fetchSquare(p.getPosition().getX(), p.getPosition().getY()).setBackground(Color.PINK);
+                                }
+                            }catch(Exception ex){
+                                System.out.println(ex.toString());
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
             });
@@ -89,6 +117,10 @@ public class GraphicTester extends javax.swing.JFrame {
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Piece p = Janus.fetchPiece(i, j);
+                if(p != null){
+                    p.refreshValidMoves();
+                    p.refreshThreats();
+                }
                 if(p == null){
                     fetchSquare(i, j).setLabel("");
                 }else if(p instanceof Pawn){
@@ -259,6 +291,37 @@ public class GraphicTester extends javax.swing.JFrame {
         setUpStartingBoard();
         updateBoard();
         setSize(500, 500);
+        JFrame modeFrame = new JFrame();
+        modeFrame.setLayout(new GridLayout(2, 1));
+        final JButton btnMove = new JButton("MOVE");
+        final JButton btnValid = new JButton("VALID");
+        btnMove.setBackground(Color.GREEN);
+        btnMove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activeMode = mode.MOVE;
+                btnMove.setBackground(Color.GREEN);
+                btnValid.setBackground(Color.LIGHT_GRAY);
+                updateBoard();
+            }
+        });
+        btnValid.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activeMode = mode.VALID;
+                btnMove.setBackground(Color.LIGHT_GRAY);
+                btnValid.setBackground(Color.GREEN);
+                updateBoard();
+            }
+        });
+        modeFrame.add(btnMove);
+        modeFrame.add(btnValid);
+        modeFrame.setVisible(true);
+        modeFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        modeFrame.setResizable(false);
+        modeFrame.setSize(200, 140);
+        modeFrame.setLocationRelativeTo(this);
+        modeFrame.setLocation(600, 200);
     }
 
     /**
@@ -271,6 +334,7 @@ public class GraphicTester extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout(8, 8));
 
         pack();

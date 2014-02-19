@@ -17,6 +17,7 @@ import pieces.*;
  */
 public class Janus {
     
+    private static boolean whiteTurn = true;
     private static Piece selectedPiece = null;
     private static boolean whiteCheck = false;
     private static boolean blackCheck = false;
@@ -39,6 +40,14 @@ public class Janus {
         new Position(0,7), new Position(1,7), new Position(2,7), new Position(3,7),
         new Position(4,7), new Position(5,7), new Position(6,7), new Position(7,7)
     };
+
+    public static boolean isWhiteTurn() {
+        return whiteTurn;
+    }
+
+    public static void setWhiteTurn(boolean whiteTurn) {
+        Janus.whiteTurn = whiteTurn;
+    }
 
     public static boolean isWhiteCheck() {
         return whiteCheck;
@@ -105,8 +114,8 @@ public class Janus {
     
     public static void main(String[] args) throws IOException, InterruptedException {
         GraphicTester tester = new GraphicTester();
-        tester.setVisible(true);
-        /*Tester.setUpStartingBoard();
+        tester.setVisible(true);/*
+        Tester.setUpStartingBoard();
         Tester.printBoard();
         Tester.commandListener();*/
     }

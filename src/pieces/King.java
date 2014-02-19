@@ -48,10 +48,10 @@ public class King extends Piece {
     }
     
     private void checkValidMove(int x, int y){
-        Piece checkedPos = Janus.fetchPiece(x, y);
-        if(!isOutOfBounds(x, y) &&
-                (checkedPos == null || checkedPos.isWhite() != white)){
-            addValidMove(Janus.fetchPosition(x, y));
+        if(!isOutOfBounds(x, y)){
+            Piece checkedPos = Janus.fetchPiece(x, y);
+            if(checkedPos == null || checkedPos.isWhite() != white)
+               addValidMove(Janus.fetchPosition(x, y)); 
         }
     }
 

@@ -69,9 +69,7 @@ public class Bishop extends Piece {
                     if(checkedPos == null){
                         addThreat(Janus.fetchPosition(x + j * alpha, y + j * beta));
                     }else{
-                        if(checkedPos.isWhite() != white){
-                            addThreat(Janus.fetchPosition(x + j * alpha, y + j * beta));
-                        }
+                        addThreat(Janus.fetchPosition(x + j * alpha, y + j * beta));
                         break;
                     }
                 }else{

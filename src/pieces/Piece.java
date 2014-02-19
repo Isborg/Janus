@@ -38,6 +38,7 @@ public abstract class Piece {
                 piece.refreshValidMoves();
                 piece.refreshThreats();
             }
+            Janus.setWhiteTurn(!Janus.isWhiteTurn());
         }
     }
     
