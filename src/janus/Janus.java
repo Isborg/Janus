@@ -17,6 +17,8 @@ import pieces.*;
  */
 public class Janus {
     
+    public final static boolean WHITE = true;
+    public final static boolean BLACK = false;
     private static boolean whiteTurn = true;
     private static Piece selectedPiece = null;
     private static boolean whiteCheck = false;

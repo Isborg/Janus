@@ -7,11 +7,14 @@ package janus;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -26,6 +29,8 @@ import pieces.Rook;
  */
 public class GraphicTester extends javax.swing.JFrame {
     
+    private JLabel lblTurn = new JLabel("BLANCAS");
+    private JButton btnTurn = new JButton();
     private enum mode {MOVE,VALID};
     private mode activeMode = mode.MOVE;
     private SquareButton[] squares = {
@@ -67,6 +72,13 @@ public class GraphicTester extends javax.swing.JFrame {
                                     Janus.getSelectedPiece().move(getX(), getY());
                                     Janus.setSelectedPiece(null);
                                     updateBoard();
+                                    if(Janus.isWhiteTurn()){
+                                        lblTurn.setText("BLANCAS");
+                                        btnTurn.setBackground(Color.WHITE);
+                                    }else{
+                                        lblTurn.setText("NEGRAS");
+                                        btnTurn.setBackground(Color.BLACK);
+                                    }
                                 }else{
                                     Janus.setSelectedPiece(p);
                                     showValidMoves(p);
@@ -79,7 +91,7 @@ public class GraphicTester extends javax.swing.JFrame {
                             try{
                                 updateBoard();
                                 Position pos = Janus.fetchPosition(getX(), getY());
-                                fetchSquare(pos.getX(), pos.getY()).setBackground(Color.WHITE);
+                                fetchSquare(pos.getX(), pos.getY()).setBackground(Color.MAGENTA);
                                 for (Piece p : pos.getValids()) {
                                     fetchSquare(p.getPosition().getX(), p.getPosition().getY()).setBackground(Color.CYAN);
                                 }
@@ -114,6 +126,7 @@ public class GraphicTester extends javax.swing.JFrame {
     }
         
     private void updateBoard(){
+        Color bg = Color.LIGHT_GRAY;
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 Piece p = Janus.fetchPiece(i, j);
@@ -154,7 +167,9 @@ public class GraphicTester extends javax.swing.JFrame {
                     else
                         fetchSquare(i, j).setLabel("bKing");
                 }
-                fetchSquare(i, j).setBackground(Color.LIGHT_GRAY);
+                fetchSquare(i, j).setBackground(bg);
+                if(j != 7)
+                    bg = (bg == Color.LIGHT_GRAY) ? Color.WHITE : Color.LIGHT_GRAY;
             }
         }
     }
@@ -292,7 +307,7 @@ public class GraphicTester extends javax.swing.JFrame {
         updateBoard();
         setSize(500, 500);
         JFrame modeFrame = new JFrame();
-        modeFrame.setLayout(new GridLayout(2, 1));
+        modeFrame.setLayout(new GridLayout(3, 1));
         final JButton btnMove = new JButton("MOVE");
         final JButton btnValid = new JButton("VALID");
         btnMove.setBackground(Color.GREEN);
@@ -319,9 +334,16 @@ public class GraphicTester extends javax.swing.JFrame {
         modeFrame.setVisible(true);
         modeFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         modeFrame.setResizable(false);
-        modeFrame.setSize(200, 140);
+        modeFrame.setSize(200, 200);
         modeFrame.setLocationRelativeTo(this);
         modeFrame.setLocation(600, 200);
+        JPanel pnlTurn = new JPanel(new GridLayout(1, 2));
+        lblTurn.setFont(new Font(null, Font.BOLD, 16));
+        pnlTurn.add(lblTurn);
+        btnTurn.setEnabled(false);
+        btnTurn.setBackground(Color.WHITE);
+        pnlTurn.add(btnTurn);
+        modeFrame.add(pnlTurn);
     }
 
     /**
