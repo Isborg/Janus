@@ -23,7 +23,6 @@ public class Janus {
     private static Piece selectedPiece = null;
     private static boolean whiteCheck = false;
     private static boolean blackCheck = false;
-    private static HashMap<Position,Piece> board = new HashMap<Position, Piece>();
     private static Position[] positions = {
         new Position(0,0), new Position(1,0), new Position(2,0), new Position(3,0),
         new Position(4,0), new Position(5,0), new Position(6,0), new Position(7,0),
@@ -74,10 +73,6 @@ public class Janus {
     public static void setSelectedPiece(Piece selectedPiece) {
         Janus.selectedPiece = selectedPiece;
     }
-
-    public static HashMap<Position, Piece> getBoard() {
-        return board;
-    }
     
     /* +---+-----+-----+-----+-----+-----+-----+-----+-----+
      * |   |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
@@ -107,7 +102,7 @@ public class Janus {
      */
     
     public static Piece fetchPiece(int x, int y) {
-        return board.get(fetchPosition(x, y));
+        return positions[y * 8 + x].getPiece();
     }
     
     public static Position fetchPosition(int x, int y) {

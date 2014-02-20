@@ -145,7 +145,7 @@ public class Tester {
                         piece.setPosition(Janus.fetchPosition(
                                 translateCoordinates(cmd.charAt(19)), translateCoordinates(cmd.charAt(20))));
                     }
-                    Janus.getBoard().put(piece.getPosition(), piece);
+                    piece.getPosition().setPiece(piece);
                     printBoard();
                 }catch(Exception e){
                     printBoard();
@@ -281,10 +281,10 @@ public class Tester {
         for(int i = 0; i < 8; i++){
             Pawn wPawn = new Pawn(true);
             wPawn.setPosition(Janus.fetchPosition(i, 1));
-            Janus.getBoard().put(wPawn.getPosition(), wPawn);
+            wPawn.getPosition().setPiece(wPawn);
             Pawn bPawn = new Pawn(false);
             bPawn.setPosition(Janus.fetchPosition(i, 6));
-            Janus.getBoard().put(bPawn.getPosition(), bPawn);
+            bPawn.getPosition().setPiece(bPawn);
         }
         for(int i = 0; i < 8; i++){
             Piece wPiece = null;
@@ -324,9 +324,9 @@ public class Tester {
                     break;
             }
             wPiece.setPosition(Janus.fetchPosition(i, 0));
-            Janus.getBoard().put(wPiece.getPosition(), wPiece);
+            wPiece.getPosition().setPiece(wPiece);
             bPiece.setPosition(Janus.fetchPosition(i, 7));
-            Janus.getBoard().put(bPiece.getPosition(), bPiece);
+            bPiece.getPosition().setPiece(bPiece);
         }
     }
     

@@ -188,10 +188,10 @@ public class GraphicTester extends javax.swing.JFrame {
         for(int i = 0; i < 8; i++){
             Pawn wPawn = new Pawn(true);
             wPawn.setPosition(Janus.fetchPosition(i, 1));
-            Janus.getBoard().put(wPawn.getPosition(), wPawn);
+            wPawn.getPosition().setPiece(wPawn);
             Pawn bPawn = new Pawn(false);
             bPawn.setPosition(Janus.fetchPosition(i, 6));
-            Janus.getBoard().put(bPawn.getPosition(), bPawn);
+            bPawn.getPosition().setPiece(bPawn);
         }
         for(int i = 0; i < 8; i++){
             Piece wPiece = null;
@@ -231,9 +231,9 @@ public class GraphicTester extends javax.swing.JFrame {
                     break;
             }
             wPiece.setPosition(Janus.fetchPosition(i, 0));
-            Janus.getBoard().put(wPiece.getPosition(), wPiece);
+            wPiece.getPosition().setPiece(wPiece);
             bPiece.setPosition(Janus.fetchPosition(i, 7));
-            Janus.getBoard().put(bPiece.getPosition(), bPiece);
+            bPiece.getPosition().setPiece(bPiece);
         }
     }
     

@@ -15,6 +15,7 @@ public class Position {
     
     private int x;
     private int y;
+    private Piece piece;
     private ArrayList<Piece> valids = new ArrayList<Piece>();
     private ArrayList<Piece> threats = new ArrayList<Piece>();
 
@@ -29,6 +30,14 @@ public class Position {
 
     public int getY() {
         return y;
+    }
+
+    public Piece getPiece() {
+        return piece;
+    }
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
     }
 
     public ArrayList<Piece> getValids() {

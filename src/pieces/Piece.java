@@ -25,9 +25,9 @@ public abstract class Piece {
     public void move(int x, int y){
         Position pos = Janus.fetchPosition(x, y);
         if(validMoves.contains(pos)){
-            Janus.getBoard().put(getPosition(), null);
+            getPosition().setPiece(null);
             setPosition(pos);
-            Janus.getBoard().put(pos, this);
+            pos.setPiece(this);
             refreshValidMoves();
             refreshThreats();
             for (Piece piece : pos.getValids()) {
