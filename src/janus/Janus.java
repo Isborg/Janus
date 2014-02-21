@@ -20,9 +20,8 @@ public class Janus {
     public final static boolean WHITE = true;
     public final static boolean BLACK = false;
     private static boolean whiteTurn = true;
+    private static boolean check = false;
     private static Piece selectedPiece = null;
-    private static boolean whiteCheck = false;
-    private static boolean blackCheck = false;
     private static Position[] positions = {
         new Position(0,0), new Position(1,0), new Position(2,0), new Position(3,0),
         new Position(4,0), new Position(5,0), new Position(6,0), new Position(7,0),
@@ -50,20 +49,12 @@ public class Janus {
         Janus.whiteTurn = whiteTurn;
     }
 
-    public static boolean isWhiteCheck() {
-        return whiteCheck;
+    public static boolean isCheck() {
+        return check;
     }
 
-    public static void setWhiteCheck(boolean whiteCheck) {
-        Janus.whiteCheck = whiteCheck;
-    }
-
-    public static boolean isBlackCheck() {
-        return blackCheck;
-    }
-
-    public static void setBlackCheck(boolean blackCheck) {
-        Janus.blackCheck = blackCheck;
+    public static void setCheck(boolean check) {
+        Janus.check = check;
     }
 
     public static Piece getSelectedPiece() {

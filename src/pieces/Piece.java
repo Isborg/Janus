@@ -22,6 +22,23 @@ public abstract class Piece {
     public abstract void refreshValidMoves();
     public abstract void refreshThreats();
     
+    public boolean select(){
+        if(Janus.getSelectedPiece() == null){
+            if(Janus.isWhiteTurn() && isWhite()){
+                Janus.setSelectedPiece(this);
+                return true;
+            }
+            else if(!Janus.isWhiteTurn() && !isWhite()){
+                Janus.setSelectedPiece(this);
+                return true;
+            }
+            return false;
+        }else{
+            Janus.setSelectedPiece(null);
+            return false;
+        }
+    }
+    
     public void move(int x, int y){
         Position pos = Janus.fetchPosition(x, y);
         if(validMoves.contains(pos)){
@@ -39,6 +56,8 @@ public abstract class Piece {
                 piece.refreshThreats();
             }
             Janus.setWhiteTurn(!Janus.isWhiteTurn());
+        }else{
+            Janus.setSelectedPiece(null);
         }
     }
     
@@ -51,12 +70,8 @@ public abstract class Piece {
         threats.add(position);
         position.getThreats().add(this);
         Piece piece = Janus.fetchPiece(position.getX(), position.getY());
-        if(piece != null && piece instanceof King){
-            if(piece.isWhite())
-                Janus.setWhiteCheck(true);
-            else
-                Janus.setBlackCheck(true);
-        }
+        if(piece != null && piece instanceof King)
+            Janus.setCheck(true);
     }
     
     protected void clearValids(){

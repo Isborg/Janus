@@ -80,8 +80,8 @@ public class GraphicTester extends javax.swing.JFrame {
                                         btnTurn.setBackground(Color.BLACK);
                                     }
                                 }else{
-                                    Janus.setSelectedPiece(p);
-                                    showValidMoves(p);
+                                    if(p.select())
+                                        showValidMoves(p);
                                 }
                             }catch(Exception ex){
                                 System.out.println(ex.toString());
